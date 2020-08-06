@@ -1,6 +1,5 @@
 package strategyobjects;
 
-public interface SortingAlgorithm
-{
-    int[] sort(int[] toSort);
+public interface SortingAlgorithm {
+	void sort(int[] toSort);
 }

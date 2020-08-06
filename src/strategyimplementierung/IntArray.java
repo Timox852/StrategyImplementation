@@ -2,37 +2,22 @@ package strategyimplementierung;
 
 import strategyobjects.SortingAlgorithm;
 
-public class IntArray
-{
+public class IntArray {
 
-    private SortingAlgorithm algorithm = null;
-    private int[] intArray = null;
+	private SortingAlgorithm algorithm = null;
+	private int[] intArray = null;
 
-    public IntArray(int[] array)
-    {
-        intArray = array;
-    }
+	public IntArray(int[] array) {
+		intArray = array;
+	}
 
-   
-    public void setSortingAlgorith(SortingAlgorithm algo)
-    {
-        algorithm = algo;
-    }
+	public void setSortingAlgorithm(SortingAlgorithm algo) {
+		algorithm = algo;
+	}
 
-  
-    public String getSortingAlgorithm()
-    {
-        return algorithm.toString();
-    }
-
-    
-    public int[] go()
-    {
-        if (algorithm != null && intArray != null)
-        {
-            int[] sorted = algorithm.sort(intArray);
-            return sorted;
-        }
-        return null;
-    }
+	public void sort() {
+		if (algorithm != null && intArray != null) {
+			algorithm.sort(intArray);
+		}
+	}
 }
