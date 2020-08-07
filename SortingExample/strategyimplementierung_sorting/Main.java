@@ -4,24 +4,30 @@ import java.util.Arrays;
 
 import strategyobjects_sorting.BubbleSort;
 import strategyobjects_sorting.SelectionSort;
+import strategyobjects_sorting.ShuffleSort;
 import strategyobjects_sorting.SortingAlgorithm;
 
-public class Main {
+public class Main
+{
 
 	/**
 	 * Entry point
 	 * 
 	 * @param args unused
 	 */
-	public static void main(String[] args) {
-		int[] unsorted = createRandomUnsortedArray(20, 1, 100);
+	public static void main(String[] args)
+	{
+		int[] unsorted = createRandomUnsortedArray(10, 1, 100);
+		System.out.println("Unsorted: " + Arrays.toString(unsorted));
 
-		int[] sortedBySelectonSort = sort(unsorted, new SelectionSort());
-		int[] sortedByBubbleSort = sort(unsorted, new BubbleSort());
+		long bubbleDur = countSortDuration(unsorted, new BubbleSort());
+		System.out.println("Sorted with BubbleSort in " + bubbleDur + " Nanoseconds");
 
-		System.out.println("Unsorted:      " + Arrays.toString(unsorted));
-		System.out.println("SelectionSort: " + Arrays.toString(sortedBySelectonSort));
-		System.out.println("BubbleSort:    " + Arrays.toString(sortedByBubbleSort));
+		long selectionDur = countSortDuration(unsorted, new SelectionSort());
+		System.out.println("Sorted with SelectionSort in " + selectionDur + " Nanoseconds");
+
+		long shuffleDur = countSortDuration(unsorted, new ShuffleSort());
+		System.out.println("Sorted with SelectionSort in " + shuffleDur + " Nanoseconds");
 	}
 
 	/**
@@ -32,10 +38,12 @@ public class Main {
 	 * @param max    biggest possible numbers
 	 * @return integer array with random numbers
 	 */
-	private static int[] createRandomUnsortedArray(int length, int min, int max) {
+	private static int[] createRandomUnsortedArray(int length, int min, int max)
+	{
 		int range = max - min + 1;
 		int[] newArray = new int[length];
-		for (int i = 0; i < newArray.length; i++) {
+		for (int i = 0; i < newArray.length; i++)
+		{
 			newArray[i] = (int) (Math.random() * range) + min;
 		}
 		return newArray;
@@ -48,11 +56,13 @@ public class Main {
 	 * @param strategy sorting class
 	 * @return sorted integer array
 	 */
-	private static int[] sort(int[] unsorted, SortingAlgorithm strategy) {
+	private static int[] sort(int[] unsorted, SortingAlgorithm strategy)
+	{
 		// Deep copy of unsorted array to differentiate between sorted and unsorted
 		// array
 		int[] toBeSorted = new int[unsorted.length];
-		for (int i = 0; i < unsorted.length; i++) {
+		for (int i = 0; i < unsorted.length; i++)
+		{
 			toBeSorted[i] = unsorted[i];
 		}
 
@@ -61,5 +71,20 @@ public class Main {
 		strategyArray.setSortingAlgorithm(strategy);
 		strategyArray.sort();
 		return toBeSorted;
+	}
+
+	/**
+	 * Counts the duration of a sorting process in nanoseconds
+	 * 
+	 * @param unsorted unsorted array to sort
+	 * @param strategy sorting algorithm
+	 * @return duration of sorting process in nano seconds
+	 */
+	private static long countSortDuration(int[] unsorted, SortingAlgorithm strategy)
+	{
+		long startTime = System.nanoTime();
+		sort(unsorted, strategy);
+		long endTime = System.nanoTime();
+		return endTime - startTime;
 	}
 }
